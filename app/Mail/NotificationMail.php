@@ -60,6 +60,3 @@ class NotificationMail extends Mailable
     }
 }
 
-        return [];
-    }
-}
