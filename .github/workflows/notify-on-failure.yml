@@ -1,0 +1,26 @@
+name: Notify on CI Failure
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+jobs:
+  notify:
+    if: ${{ github.event.workflow_run.conclusion != 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create failure issue
+        uses: actions-ecosystem/action-create-issue@v1
+        with:
+          title: "CI failed: ${{ github.event.workflow_run.name }} (run ${{ github.event.workflow_run.id }})"
+          body: |
+            The CI workflow `${{ github.event.workflow_run.name }}` (run id `${{ github.event.workflow_run.id }}`) finished with conclusion `${{ github.event.workflow_run.conclusion }}`.
+
+            View the run: ${{ github.event.workflow_run.html_url }}
+
+            Please investigate the failure.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

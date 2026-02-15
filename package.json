@@ -3,8 +3,11 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "dev": "vite",
         "build": "vite build",
-        "dev": "vite"
+        "watch": "vite",
+        "test": "cd .. && ./vendor/bin/phpunit --colors=always",
+        "test:e2e": "cd .. && ./vendor/bin/phpunit tests/Feature/DomainProvisioningE2ETest.php --colors=always"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
