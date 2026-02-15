@@ -85,7 +85,7 @@
                                 <p class="text-4xl font-bold text-blue-400">∞ Unlimited</p>
                                 <p class="text-sm text-gray-400 mt-2">No limits applied</p>
                             @else
-                                <p class="text-4xl font-bold text-blue-400">{{ auth()->user()->domains()->getRemainingSlots() }} Remaining</p>
+                                <p class="text-4xl font-bold text-blue-400">{{ auth()->user()->getRemainingSlots() }} Remaining</p>
                                 <div class="w-full bg-gray-700 rounded-full h-2 mt-3">
                                     <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full transition-all" style="width: {{ (auth()->user()->domains()->count() / auth()->user()->getSubdomainLimit()) * 100 }}%"></div>
                                 </div>

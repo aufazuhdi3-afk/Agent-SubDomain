@@ -80,4 +80,19 @@ class User extends Authenticatable
     {
         return is_null($this->subdomain_limit);
     }
+
+    /**
+     * Get number of remaining subdomain slots for this user.
+     * Returns null if unlimited, or integer if limited.
+     */
+    public function getRemainingSlots(): ?int
+    {
+        if ($this->hasUnlimitedSubdomains()) {
+            return null; // Unlimited
+        }
+
+        $limit = $this->getSubdomainLimit();
+        $used = $this->domains()->count();
+        return max(0, $limit - $used);
+    }
 }
