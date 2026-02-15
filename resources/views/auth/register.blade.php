@@ -40,7 +40,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-purple-400 hover:text-purple-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
@@ -49,4 +49,10 @@
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Login Link -->
+    <div class="mt-6 text-center">
+        <span class="text-gray-400">{{ __('Have an account?') }}</span>
+        <a href="{{ route('login') }}" class="text-purple-400 hover:text-purple-300 underline">{{ __('Login here') }}</a>
+    </div>
 </x-guest-layout>

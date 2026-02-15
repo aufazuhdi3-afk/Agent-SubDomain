@@ -31,6 +31,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
+            <a href="{{ route('login') }}" class="text-purple-400 underline hover:text-purple-300 mr-4">{{ __('Back to login') }}</a>
             <x-primary-button>
                 {{ __('Reset Password') }}
             </x-primary-button>
