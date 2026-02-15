@@ -45,7 +45,31 @@ class Domain extends Model
      */
     public static function canCreateNew($userId): bool
     {
-        return self::where('user_id', $userId)->count() < 3;
+        $user = User::find($userId);
+        
+        // If user has unlimited subdomains
+        if ($user->hasUnlimitedSubdomains()) {
+            return true;
+        }
+
+        // Check against user's limit
+        $currentCount = self::where('user_id', $userId)->count();
+        return $currentCount < $user->getSubdomainLimit();
+    }
+
+    /**
+     * Get remaining subdomain slots for user.
+     */
+    public static function getRemainingSlots($userId): ?int
+    {
+        $user = User::find($userId);
+        
+        if ($user->hasUnlimitedSubdomains()) {
+            return null; // unlimited
+        }
+
+        $currentCount = self::where('user_id', $userId)->count();
+        return max(0, $user->getSubdomainLimit() - $currentCount);
     }
 }
 

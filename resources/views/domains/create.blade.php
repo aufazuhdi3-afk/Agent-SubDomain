@@ -7,6 +7,21 @@
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <h2 class="text-2xl font-bold mb-6">Request New Domain</h2>
 
+                <!-- Limit Info -->
+                <div class="mb-6 p-4 rounded-lg border-l-4 {{ auth()->user()->hasUnlimitedSubdomains() ? 'border-green-500 bg-green-50 dark:bg-green-900' : 'border-blue-500 bg-blue-50 dark:bg-blue-900' }}">
+                    <p class="text-sm font-semibold">
+                        <strong>Your Subdomain Quota:</strong>
+                        @if(auth()->user()->hasUnlimitedSubdomains())
+                            <span class="text-green-600 dark:text-green-400">∞ Unlimited</span>
+                        @else
+                            <span class="text-blue-600 dark:text-blue-400">
+                                {{ auth()->user()->domains()->count() }}/{{ auth()->user()->subdomain_limit }} used
+                                ({{ $remainingSlots }} remaining)
+                            </span>
+                        @endif
+                    </p>
+                </div>
+
                 @if ($errors->any())
                     <div class="mb-4 px-4 py-3 bg-red-100 text-red-700 border border-red-400 rounded">
                         <ul>

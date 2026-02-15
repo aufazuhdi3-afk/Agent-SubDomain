@@ -80,11 +80,39 @@
                         @enderror
                     </div>
 
+                    <!-- Subdomain Limit -->
+                    <div>
+                        <label for="subdomain_limit" class="block text-sm font-medium mb-2">Subdomain Limit</label>
+                        <div class="flex gap-2">
+                            <input type="number" name="subdomain_limit" id="subdomain_limit" 
+                                class="flex-1 px-4 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
+                                placeholder="e.g., 3, 5, 10" min="3" value="{{ old('subdomain_limit', $user->subdomain_limit) }}">
+                            <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                onclick="document.getElementById('subdomain_limit').value=''">
+                                ∞ Unlimited
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Leave empty for unlimited, or enter number (minimum 3)</p>
+                        @error('subdomain_limit')
+                            <span class="text-red-600 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- Info -->
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded text-sm">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded text-sm space-y-2">
                         <p><strong>Email Verified:</strong> {{ $user->email_verified_at ? $user->email_verified_at->format('M d, Y H:i') : 'Not verified' }}</p>
                         <p><strong>Created:</strong> {{ $user->created_at->format('M d, Y H:i') }}</p>
                         <p><strong>Last Updated:</strong> {{ $user->updated_at->format('M d, Y H:i') }}</p>
+                        <hr class="border-gray-300 dark:border-gray-600 my-2">
+                        <p><strong>Subdomains Created:</strong> {{ $user->domains()->count() }}</p>
+                        <p>
+                            <strong>Subdomain Limit:</strong>
+                            @if($user->hasUnlimitedSubdomains())
+                                <span class="text-green-600 font-semibold">∞ Unlimited</span>
+                            @else
+                                <span class="text-indigo-600 font-semibold">{{ $user->subdomain_limit }} ({{ $user->domains()->count() }}/{{ $user->subdomain_limit }} used)</span>
+                            @endif
+                        </p>
                     </div>
 
                     <!-- Buttons -->

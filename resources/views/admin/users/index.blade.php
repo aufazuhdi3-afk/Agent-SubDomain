@@ -46,6 +46,7 @@
                                 <th class="px-4 py-2 text-left">Name</th>
                                 <th class="px-4 py-2 text-left">Email</th>
                                 <th class="px-4 py-2 text-left">Role</th>
+                                <th class="px-4 py-2 text-left">Subdomain Limit</th>
                                 <th class="px-4 py-2 text-left">Verified</th>
                                 <th class="px-4 py-2 text-left">Created</th>
                                 <th class="px-4 py-2 text-center">Actions</th>
@@ -62,6 +63,13 @@
                                             {{ $user->role === 'admin' ? 'bg-red-600' : 'bg-blue-600' }}">
                                             {{ ucfirst($user->role) }}
                                         </span>
+                                    </td>
+                                    <td class="px-4 py-2 text-sm">
+                                        @if($user->hasUnlimitedSubdomains())
+                                            <span class="text-green-600 font-semibold">∞ Unlimited</span>
+                                        @else
+                                            <span class="text-indigo-600 font-semibold">{{ $user->subdomain_limit }}</span>
+                                        @endif
                                     </td>
                                     <td class="px-4 py-2 text-center">
                                         @if ($user->email_verified_at)

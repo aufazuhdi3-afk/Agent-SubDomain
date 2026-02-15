@@ -50,6 +50,7 @@ class AdminUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['required', 'in:user,admin'],
+            'subdomain_limit' => ['nullable', 'integer', 'min:3'],
         ]);
 
         if ($validator->fails()) {
@@ -61,11 +62,13 @@ class AdminUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'subdomain_limit' => $request->subdomain_limit,
             'email_verified_at' => now(),
         ]);
 
         // Log activity
-        activity_log(auth()->id(), 'user_created', "Created user: {$user->email} (role: {$user->role})", request()->ip());
+        $limitText = $request->subdomain_limit ? "limit: {$request->subdomain_limit}" : "unlimited";
+        activity_log(auth()->id(), 'user_created', "Created user: {$user->email} (role: {$user->role}, $limitText)", request()->ip());
 
         return redirect()->route('admin.users.index')
             ->with('success', "User '{$user->name}' created successfully.");
@@ -89,23 +92,39 @@ class AdminUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'role' => ['required', 'in:user,admin'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'subdomain_limit' => ['nullable', 'integer', 'min:3'],
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $data = $request->only(['name', 'email', 'role']);
+        $data = $request->only(['name', 'email', 'role', 'subdomain_limit']);
         
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
 
         $oldRole = $user->role;
+        $oldLimit = $user->subdomain_limit;
         $user->update($data);
 
         // Log activity
-        activity_log(auth()->id(), 'user_updated', "Updated user: {$user->email}" . ($oldRole !== $user->role ? " (role: $oldRole → {$user->role})" : ""), request()->ip());
+        $changes = [];
+        if ($oldRole !== $user->role) {
+            $changes[] = "role: $oldRole → {$user->role}";
+        }
+        if ($oldLimit !== $user->subdomain_limit) {
+            $oldLimitText = $oldLimit ? $oldLimit : 'unlimited';
+            $newLimitText = $user->subdomain_limit ? $user->subdomain_limit : 'unlimited';
+            $changes[] = "subdomain_limit: $oldLimitText → $newLimitText";
+        }
+        
+        if (!empty($changes)) {
+            activity_log(auth()->id(), 'user_updated', "Updated user: {$user->email} (" . implode(', ', $changes) . ")", request()->ip());
+        } else {
+            activity_log(auth()->id(), 'user_updated', "Updated user: {$user->email}", request()->ip());
+        }
 
         return redirect()->route('admin.users.index')
             ->with('success', "User '{$user->name}' updated successfully.");

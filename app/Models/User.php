@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'subdomain_limit',
     ];
 
     /**
@@ -61,5 +62,22 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    /**
+     * Get subdomain limit for this user.
+     * Returns null if unlimited, or integer if limited.
+     */
+    public function getSubdomainLimit(): ?int
+    {
+        return $this->subdomain_limit;
+    }
+
+    /**
+     * Check if user has unlimited subdomains.
+     */
+    public function hasUnlimitedSubdomains(): bool
+    {
+        return is_null($this->subdomain_limit);
     }
 }

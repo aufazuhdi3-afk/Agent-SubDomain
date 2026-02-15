@@ -77,6 +77,24 @@
                         @enderror
                     </div>
 
+                    <!-- Subdomain Limit -->
+                    <div>
+                        <label for="subdomain_limit" class="block text-sm font-medium mb-2">Subdomain Limit</label>
+                        <div class="flex gap-2">
+                            <input type="number" name="subdomain_limit" id="subdomain_limit" 
+                                class="flex-1 px-4 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
+                                placeholder="e.g., 3, 5, 10" min="3" value="{{ old('subdomain_limit') }}">
+                            <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                onclick="document.getElementById('subdomain_limit').value=''">
+                                ∞ Unlimited
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Leave empty for unlimited, or enter number (minimum 3)</p>
+                        @error('subdomain_limit')
+                            <span class="text-red-600 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- Buttons -->
                     <div class="flex justify-between items-center pt-6">
                         <a href="{{ route('admin.users.index') }}" class="text-gray-600 hover:text-gray-800">

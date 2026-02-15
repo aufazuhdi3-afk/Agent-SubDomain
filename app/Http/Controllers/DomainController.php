@@ -26,7 +26,8 @@ class DomainController extends Controller
      */
     public function create()
     {
-        return view('domains.create');
+        $remainingSlots = Domain::getRemainingSlots(auth()->id());
+        return view('domains.create', compact('remainingSlots'));
     }
 
     /**
@@ -43,9 +44,12 @@ class DomainController extends Controller
             return back()->with('error', 'You have reached the daily limit of 3 domain requests. Try again tomorrow.');
         }
 
-        // Validate domain limit
-        if (!Domain::canCreateNew(auth()->id())) {
-            return back()->with('error', 'You have reached the maximum limit of 3 domains.');
+        // Validate domain limit (per-user limit)
+        $user = auth()->user();
+        if (!Domain::canCreateNew($user->id)) {
+            $limit = $user->getSubdomainLimit();
+            $limitText = $limit ? "maximum $limit" : 'unlimited';
+            return back()->with('error', "You have reached your $limitText domain limit. Contact admin for higher limit.");
         }
 
         $validated = $request->validate([
