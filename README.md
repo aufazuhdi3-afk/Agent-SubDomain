@@ -4,13 +4,16 @@ A production-ready Domain Provisioning Service for unnar.id where campus users c
 
 ## Features
 
-- **User Domain Management**: Users can request up to 3 subdomains with a limit of 3 requests per day
-- **Admin Dashboard**: Administrators review, approve, reject, and manage domains
+- **Modern UI/UX**: Professional hero landing page with animated gradients and feature showcase
+- **Responsive Design**: Mobile-first design using Tailwind CSS v4 for all screen sizes
+- **User Domain Management**: Users can request subdomains with configurable per-user limits (default 3, unlimited, or custom)
+- **Admin Dashboard**: Beautiful admin dashboard with real-time stats and domain management controls
 - **Automatic Provisioning**: Queue-based system that automatically provisions approved domains via RADNET API
 - **Activity Logging**: Complete audit trail of all user and admin actions
 - **Email Notifications**: Users receive notifications when domains are approved, active, or fail provisioning
 - **Role-Based Access Control**: Secure admin and user routes with middleware
 - **Queue System**: Database-backed queue for reliable job processing
+- **Dynamic Quota System**: Admins can set per-user subdomain limits with unlimited option
 
 ## Requirements
 
@@ -121,6 +124,42 @@ npm run dev
 **Admin Login:**
 - Email: `admin@unnar.id`
 - Password: `password`
+
+## Modern Design & UI
+
+The application features a modern, professional design powered by:
+
+### Design System
+- **Dark Theme**: Modern dark gradient background (gray-950 to gray-900)
+- **Color Palette**: Purple → Pink gradient primary, with supporting colors
+- **Typography**: Instrument Sans font for clean, professional appearance
+- **Animations**: Smooth transitions and gradient animations throughout
+
+### Key Design Elements
+1. **Hero Landing Page** (`/`)
+   - Animated gradient background
+   - Clear value proposition with CTA buttons
+   - "How It Works" 3-step visual guide
+   - Feature grid with hover effects (6 core features)
+   - Stats showcase and professional footer
+
+2. **Modern Dashboard** (`/dashboard`)
+   - Personalized welcome section with user/admin differentiation
+   - Stat cards with emoji icons and backdrop blur
+   - Real-time quota progress bar
+   - Gradient-styled action buttons
+   - Responsive layout for mobile and desktop
+
+3. **Responsive Components**
+   - Mobile-first design approach
+   - Tailwind CSS v4 utilities for all layouts
+   - Touch-friendly buttons and spacing (min 48x48px targets)
+   - Adaptive typography sizing
+
+### Branding
+- **Logo**: Custom SVG icon (circle with cross pattern representing subdomain)
+- **Logo Usage**: Navigation bar header and landing page branding
+- **Brand Colors**: Purple-600 to Pink-600 gradients for primary elements
 
 ## User Workflow
 
