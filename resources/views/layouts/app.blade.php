@@ -23,6 +23,7 @@
     <body class="font-sans antialiased bg-gradient-to-br from-gray-950 via-gray-900 to-gray-900 text-white">
         <div class="min-h-screen flex flex-col">
             @php($slot = $slot ?? '')
+            @php($errors = $errors ?? session('errors') ?? new \Illuminate\Support\ViewErrorBag())
             @include('layouts.navigation')
 
             <!-- Page Heading -->

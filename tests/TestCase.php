@@ -28,9 +28,5 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Disable all middleware during tests to avoid middleware-related
-        // rejections (CSRF, Throttle, etc.) interfering with functional tests.
-        $this->withoutMiddleware();
     }
 }

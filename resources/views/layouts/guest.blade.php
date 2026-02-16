@@ -26,6 +26,8 @@
             <div class="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
             <div class="absolute top-0 right-0 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
 
+            @php($slot = $slot ?? '')
+            @php($errors = $errors ?? session('errors') ?? new \Illuminate\Support\ViewErrorBag())
             <div class="relative z-10">
                 <a href="/" class="inline-flex items-center gap-2 mb-6">
                     <x-application-logo class="w-8 h-8 text-purple-400" />
